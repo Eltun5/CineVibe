@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.ea.cinevibe.model.enums.UserRole;
+import org.ea.cinevibe.security.model.CustomUserDetails;
 
 import java.time.LocalDateTime;
 
@@ -29,17 +30,31 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    private boolean enabled;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    private boolean isAccountNonExpired;
+
+    private boolean isAccountNonLocked;
+
+    private boolean isCredentialsNonExpired;
+
+    private boolean isEnabled;
+
     @PrePersist
     private void prePersist(){
         createdAt=updatedAt=LocalDateTime.now();
-        enabled=true;
+        isAccountNonExpired=
+                isAccountNonLocked=
+                isCredentialsNonExpired=
+                        isEnabled=
+                                true;
+    }
+
+    public CustomUserDetails getCustomUserDetails(){
+        return new CustomUserDetails(this);
     }
 }

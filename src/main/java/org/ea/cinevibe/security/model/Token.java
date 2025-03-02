@@ -1,4 +1,4 @@
-package org.ea.cinevibe.model;
+package org.ea.cinevibe.security.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
