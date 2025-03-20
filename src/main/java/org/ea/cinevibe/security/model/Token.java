@@ -17,7 +17,7 @@ public class Token {
     private Long id;
 
     @Column(nullable = false)
-    private String token;
+    private String value;
 
     @Column(name = "is_expired")
     private boolean isExpired;

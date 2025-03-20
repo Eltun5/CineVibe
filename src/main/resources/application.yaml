@@ -2,7 +2,9 @@ spring:
   application:
     name: cinevibe
   datasource:
-    url:
-    password:
-    username:
-
+    url: jdbc:postgresql://localhost:5432/cine_vibe
+    password: password
+    username: postgres
+jwt:
+    expireTime: 900000
+    secretKey: cJrXVTptebaGAZXbo5+BBwNufO1oPQl2BOuHdQYmfOQ=
