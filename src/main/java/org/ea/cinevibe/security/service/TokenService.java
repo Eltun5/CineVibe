@@ -15,4 +15,8 @@ public class TokenService {
     public Token getTokenByValue(String value){
         return tokenRepository.getTokenByValue(value).orElseThrow();
     }
+
+    public void save(Token token){
+        tokenRepository.save(token);
+    }
 }

@@ -1,9 +1,7 @@
 package org.ea.cinevibe.security.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -31,4 +29,11 @@ public class Token {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public Token(String value, boolean isExpired, boolean isRevoked, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.value = value;
+        this.isExpired = isExpired;
+        this.isRevoked = isRevoked;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }
