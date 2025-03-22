@@ -1,7 +1,7 @@
 package org.ea.cinevibe.security.config;
 
 import org.ea.cinevibe.security.filter.CustomJwtFilter;
-import org.ea.cinevibe.security.service.CustomUserDetailsService;
+import org.ea.cinevibe.security.service.SecurityUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,11 +18,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    private final CustomUserDetailsService userDetailsService;
+    private final SecurityUserDetailsService userDetailsService;
 
     private final CustomJwtFilter jwtFilter;
 
-    public SecurityConfig(CustomUserDetailsService userDetailsService, CustomJwtFilter jwtFilter) {
+    public SecurityConfig(SecurityUserDetailsService userDetailsService, CustomJwtFilter jwtFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtFilter = jwtFilter;
     }
@@ -53,7 +53,7 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
                 addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).
                 authorizeHttpRequests(authorize -> authorize.
-                        requestMatchers("/").
+                        requestMatchers("/api/v1/auth/register", "/api/v1/auth/login").
                         permitAll().
                         anyRequest().
                         authenticated()).

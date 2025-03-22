@@ -1,4 +1,4 @@
-package org.ea.cinevibe.security.config;
+package org.ea.cinevibe.security.service;
 
 import java.util.Base64;
 import java.security.SecureRandom;

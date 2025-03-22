@@ -5,6 +5,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/cine_vibe
     password: password
     username: postgres
+  jpa:
+    hibernate:
+       ddl-auto: update
+    show-sql: true
 jwt:
     expireTime: 900000
     secretKey: cJrXVTptebaGAZXbo5+BBwNufO1oPQl2BOuHdQYmfOQ=

@@ -1,17 +1,17 @@
 package org.ea.cinevibe.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.ea.cinevibe.model.enums.UserRole;
-import org.ea.cinevibe.security.model.CustomUserDetails;
+import org.ea.cinevibe.security.model.SecurityUserDetails;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Entity(name = "users")
 public class User {
     @Id
@@ -54,7 +54,7 @@ public class User {
                                 true;
     }
 
-    public CustomUserDetails getCustomUserDetails(){
-        return new CustomUserDetails(this);
+    public SecurityUserDetails getCustomUserDetails(){
+        return new SecurityUserDetails(this);
     }
 }

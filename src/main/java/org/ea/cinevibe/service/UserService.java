@@ -17,4 +17,8 @@ public class UserService {
         return repository.getUserByUsername(username).
                 orElseThrow(() -> new NoDataFoundException("User"));
     }
+
+    public void save(User user){
+        repository.save(user);
+    }
 }

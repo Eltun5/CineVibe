@@ -1,16 +1,21 @@
-package org.ea.cinevibe.service;
+package org.ea.cinevibe.security.auth;
 
 import lombok.extern.slf4j.Slf4j;
 import org.ea.cinevibe.dto.LoginRequestDTO;
+import org.ea.cinevibe.dto.RegisterRequestDTO;
 import org.ea.cinevibe.model.User;
+import org.ea.cinevibe.model.enums.UserRole;
 import org.ea.cinevibe.security.model.Token;
 import org.ea.cinevibe.security.service.JwtService;
 import org.ea.cinevibe.security.service.TokenService;
+import org.ea.cinevibe.service.UserService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,11 +32,32 @@ public class AuthService {
 
     private final TokenService tokenService;
 
-    public AuthService(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService, TokenService tokenService) {
+    private final PasswordEncoder passwordEncoder;
+
+    public AuthService(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService, TokenService tokenService, PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.jwtService = jwtService;
         this.tokenService = tokenService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public ResponseEntity<String> register(RegisterRequestDTO request){
+        try{
+            User user = User.builder().
+                    username(request.username()).
+                    password(passwordEncoder.encode(request.password())).
+                    email(request.email()).
+                    role(UserRole.USER).
+                    build();
+
+            userService.save(user);
+            log.info("User successfully created!!!");
+            return ResponseEntity.status(HttpStatus.CREATED).body("User successfully created!!!");
+        }catch (DataIntegrityViolationException e) {
+            log.error("Username or Email exist!!!");
+            return ResponseEntity.badRequest().body("Username or Email exist!!!");
+        }
     }
 
     public ResponseEntity<String> logIn(LoginRequestDTO request) {
@@ -65,8 +91,8 @@ public class AuthService {
 
             return ResponseEntity.ok(valueOfToken);
         } catch (Exception e) {
-            log.error("Unexpected error during sign-in: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error during sign-in: " + e.getMessage());
+            log.error("Unexpected error during login: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error during login: " + e.getMessage());
         }
 
     }

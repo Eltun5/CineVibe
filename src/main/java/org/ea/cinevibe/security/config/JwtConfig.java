@@ -1,6 +1,7 @@
 package org.ea.cinevibe.security.config;
 
 import jakarta.annotation.PostConstruct;
+import org.ea.cinevibe.security.service.JwtSecretGenerator;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import java.io.FileWriter;
