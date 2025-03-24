@@ -36,6 +36,8 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    private boolean isEmailVerified;
+
     private boolean isAccountNonExpired;
 
     private boolean isAccountNonLocked;
@@ -45,16 +47,16 @@ public class User {
     private boolean isEnabled;
 
     @PrePersist
-    private void prePersist(){
-        createdAt=updatedAt=LocalDateTime.now();
-        isAccountNonExpired=
-                isAccountNonLocked=
-                isCredentialsNonExpired=
-                        isEnabled=
-                                true;
+    private void prePersist() {
+        createdAt = updatedAt = LocalDateTime.now();
+        isAccountNonExpired =
+                isAccountNonLocked =
+                        isCredentialsNonExpired =
+                                isEnabled =
+                                        true;
     }
 
-    public SecurityUserDetails getCustomUserDetails(){
+    public SecurityUserDetails getCustomUserDetails() {
         return new SecurityUserDetails(this);
     }
 }

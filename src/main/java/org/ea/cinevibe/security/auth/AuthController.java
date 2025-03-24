@@ -29,4 +29,14 @@ public class AuthController {
     public ResponseEntity<String> logOut(@RequestHeader("Authorization") String token) {
         return authService.logOut(token);
     }
+
+    @PostMapping("/send-code")
+    public ResponseEntity<String> sendVerificationCode(@RequestParam String email) {
+        return authService.sendVerificationCode(email);
+    }
+
+    @PostMapping("/verify-code")
+    public ResponseEntity<String> verifyCode(@RequestParam String email, @RequestParam String code) {
+        return authService.verifyCode(email, code);
+    }
 }
