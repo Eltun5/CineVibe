@@ -11,7 +11,7 @@ public class MainController {
 
     @GetMapping
     public ResponseEntity<String> mainPage() {
-        log.info("init ");
+        log.info("init");
         return ResponseEntity.ok("Welcome CineVibe!!!");
     }
 }

@@ -18,6 +18,10 @@ public class GenreService {
         repository.save(genre);
     }
 
+    public List<Genre> findAll(){
+        return repository.findAll();
+    }
+
     public List<Genre> getGenresByName(String name) {
         return repository.getGenresByName(name);
     }

@@ -1,0 +1,34 @@
+package org.ea.cinevibe.controller;
+
+import org.ea.cinevibe.model.Genre;
+import org.ea.cinevibe.service.GenreService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("api/v1/genre")
+public class GenreController {
+    private final GenreService service;
+
+    public GenreController(GenreService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> save(@RequestBody Genre genre){
+        service.save(genre);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Genre>> findAll(){
+        return ResponseEntity.ok(service.findAll());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Genre>> findAll(@RequestParam String name){
+        return ResponseEntity.ok(service.getGenresByName(name));
+    }
+}

@@ -17,15 +17,17 @@ public class ReviewController {
         this.service = service;
     }
 
+    @PostMapping
+    public ResponseEntity<Void> save(@RequestBody Review review){
+        service.save(review);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping
     public ResponseEntity<List<Review>> getReviewByMovie(@RequestParam Movie movie){
         return ResponseEntity.ok(service.getReviewsByMovie(movie));
     }
 
-    @PostMapping
-    public ResponseEntity<Void> save(@RequestParam Review review){
-        service.save(review);
-        return ResponseEntity.ok().build();
-    }
+
 
 }

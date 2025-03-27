@@ -19,6 +19,10 @@ public class MovieStaffService {
         repository.save(movieStaff);
     }
 
+    public List<MovieStaff> findAll(){
+        return repository.findAll();
+    }
+
     public List<MovieStaff> getMovieStaffsByRole(MovieStaffRole role) {
         return repository.getMovieStaffsByRole(role);
     }

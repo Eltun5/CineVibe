@@ -25,6 +25,10 @@ public class MovieService {
         repository.save(movie);
     }
 
+    public List<Movie> findALl() {
+        return repository.findAll();
+    }
+
     public List<Movie> getMoviesByTitle(String title) {
         return repository.getMovieByTitle(title);
     }
