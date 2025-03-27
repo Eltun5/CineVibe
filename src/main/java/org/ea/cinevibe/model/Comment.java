@@ -17,9 +17,11 @@ public class Comment {
     private Long id;
 
     @ManyToOne
+    @Column(nullable = false)
     private Review review;
 
     @OneToOne
+    @Column(nullable = false)
     private User user;
 
     @Column(nullable = false)
@@ -32,7 +34,7 @@ public class Comment {
     private LocalDateTime updatedAt;
 
     @PrePersist
-    private void prePersist(){
-        createdAt=updatedAt=LocalDateTime.now();
+    private void prePersist() {
+        createdAt = updatedAt = LocalDateTime.now();
     }
 }

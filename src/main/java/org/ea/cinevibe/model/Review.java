@@ -17,9 +17,11 @@ public class Review {
     private Long id;
 
     @OneToOne
+    @Column(nullable = false)
     private Movie movie;
 
     @OneToOne
+    @Column(nullable = false)
     private User user;
 
     @Column(nullable = false)

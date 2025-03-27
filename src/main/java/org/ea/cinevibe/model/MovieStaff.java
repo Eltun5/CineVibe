@@ -27,6 +27,7 @@ public class MovieStaff {
     private String biography;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private MovieStaffRole role;
 
     @Column(name = "image_url")
@@ -42,7 +43,7 @@ public class MovieStaff {
     private LocalDateTime updatedAt;
 
     @PrePersist
-    private void prePersist(){
-        createdAt=updatedAt=LocalDateTime.now();
+    private void prePersist() {
+        createdAt = updatedAt = LocalDateTime.now();
     }
 }
