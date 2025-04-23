@@ -14,11 +14,11 @@ public class GenreService {
         this.repository = repository;
     }
 
-    public void save(Genre genre) {
-        repository.save(genre);
+    public Genre save(Genre genre) {
+        return repository.save(genre);
     }
 
-    public List<Genre> findAll(){
+    public List<Genre> findAll() {
         return repository.findAll();
     }
 

@@ -17,12 +17,12 @@ public class MovieService {
         this.repository = repository;
     }
 
-    public void save(Movie movie) {
+    public Movie save(Movie movie) {
         if (movie.getReleaseYear() < 1850) {
             log.error("Release year cannot be less than 1850!!!");
             throw new RuntimeException("Release year cannot be less than 1850!!!");
         }
-        repository.save(movie);
+        return repository.save(movie);
     }
 
     public List<Movie> findALl() {

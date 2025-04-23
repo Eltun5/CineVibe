@@ -17,18 +17,17 @@ public class GenreController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody Genre genre){
-        service.save(genre);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Genre> save(@RequestBody Genre genre) {
+        return ResponseEntity.ok(service.save(genre));
     }
 
     @GetMapping
-    public ResponseEntity<List<Genre>> findAll(){
+    public ResponseEntity<List<Genre>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping
-    public ResponseEntity<List<Genre>> findAll(@RequestParam String name){
+    public ResponseEntity<List<Genre>> findAll(@RequestParam String name) {
         return ResponseEntity.ok(service.getGenresByName(name));
     }
 }

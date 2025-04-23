@@ -1,5 +1,6 @@
 package org.ea.cinevibe.controller;
 
+import jakarta.validation.constraints.Size;
 import org.ea.cinevibe.model.Movie;
 import org.ea.cinevibe.model.Review;
 import org.ea.cinevibe.service.ReviewService;
@@ -18,16 +19,12 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody Review review){
-        service.save(review);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Review> save(@RequestBody @Size(min = 1, max = 5) Review review) {
+        return ResponseEntity.ok(service.save(review));
     }
 
     @GetMapping
-    public ResponseEntity<List<Review>> getReviewByMovie(@RequestParam Movie movie){
+    public ResponseEntity<List<Review>> getReviewByMovie(@RequestParam Movie movie) {
         return ResponseEntity.ok(service.getReviewsByMovie(movie));
     }
-
-
-
 }

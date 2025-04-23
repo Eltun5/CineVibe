@@ -18,23 +18,22 @@ public class MovieStaffController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody MovieStaff staff){
-        service.save(staff);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<MovieStaff> save(@RequestBody MovieStaff staff) {
+        return ResponseEntity.ok(service.save(staff));
     }
 
     @GetMapping
-    public ResponseEntity<List<MovieStaff>> findAll(){
+    public ResponseEntity<List<MovieStaff>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping
-    public ResponseEntity<List<MovieStaff>> getMovieStaffsByRole(@RequestParam MovieStaffRole role){
+    public ResponseEntity<List<MovieStaff>> getMovieStaffsByRole(@RequestParam MovieStaffRole role) {
         return ResponseEntity.ok(service.getMovieStaffsByRole(role));
     }
 
     @GetMapping
-    public ResponseEntity<List<MovieStaff>> getMovieStaffByName(@RequestParam String name){
+    public ResponseEntity<List<MovieStaff>> getMovieStaffByName(@RequestParam String name) {
         return ResponseEntity.ok(service.getMovieStaffByName(name));
     }
 }

@@ -20,13 +20,9 @@ public class ReviewService {
         this.movieService = movieService;
     }
 
-    public void save(Review review) {
-        if (review.getRating() > 5 || review.getRating() < 1) {
-            log.error("Rating is invalid!!");
-            throw new RuntimeException("Rating is invalid!!");
-        }
-        repository.save(review);
+    public Review save(Review review) {
         movieService.changeMovieForAddReviewAction(review);
+        return repository.save(review);
     }
 
     public List<Review> getReviewsByMovie(Movie movie) {

@@ -15,11 +15,11 @@ public class MovieStaffService {
         this.repository = repository;
     }
 
-    public void save(MovieStaff movieStaff) {
-        repository.save(movieStaff);
+    public MovieStaff save(MovieStaff movieStaff) {
+        return repository.save(movieStaff);
     }
 
-    public List<MovieStaff> findAll(){
+    public List<MovieStaff> findAll() {
         return repository.findAll();
     }
 

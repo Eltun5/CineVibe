@@ -17,16 +17,17 @@ public class UserService {
         return repository.getUserByUsername(username).
                 orElseThrow(() -> new NoDataFoundException("User"));
     }
+
     public User getUserByEmail(String email) {
         return repository.getUserByEmail(email).
                 orElseThrow(() -> new NoDataFoundException("User"));
     }
 
-    public void save(User user){
+    public void save(User user) {
         repository.save(user);
     }
 
-    public void delete(User user){
+    public void delete(User user) {
         repository.delete(user);
     }
 }

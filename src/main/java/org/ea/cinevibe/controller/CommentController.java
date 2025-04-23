@@ -19,18 +19,17 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody Comment comment){
-        service.save(comment);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Comment> save(@RequestBody Comment comment) {
+        return ResponseEntity.ok(service.save(comment));
     }
 
     @GetMapping
-    public ResponseEntity<List<Comment>> getCommentsByUser(@RequestParam User user){
+    public ResponseEntity<List<Comment>> getCommentsByUser(@RequestParam User user) {
         return ResponseEntity.ok(service.getCommentsByUser(user));
     }
 
     @GetMapping
-    public ResponseEntity<List<Comment>> getCommentsByReview(@RequestParam Review review){
+    public ResponseEntity<List<Comment>> getCommentsByReview(@RequestParam Review review) {
         return ResponseEntity.ok(service.getCommentsByReview(review));
     }
 }

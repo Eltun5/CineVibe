@@ -16,8 +16,8 @@ public class CommentService {
         this.repository = repository;
     }
 
-    public void save(Comment comment) {
-        repository.save(comment);
+    public Comment save(Comment comment) {
+        return repository.save(comment);
     }
 
     public List<Comment> getCommentsByUser(User user) {
