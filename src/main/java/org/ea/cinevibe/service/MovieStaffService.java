@@ -1,5 +1,6 @@
 package org.ea.cinevibe.service;
 
+import org.ea.cinevibe.mapper.MovieStaffMapper;
 import org.ea.cinevibe.model.MovieStaff;
 import org.ea.cinevibe.model.enums.MovieStaffRole;
 import org.ea.cinevibe.repository.MovieStaffRepository;
@@ -29,5 +30,15 @@ public class MovieStaffService {
 
     public List<MovieStaff> getMovieStaffByName(String name) {
         return repository.getMovieStaffsByName(name);
+    }
+
+    public MovieStaff update(Long id, MovieStaff movieStaff) {
+        MovieStaff oldMovieStaff = repository.getReferenceById(id);
+
+        return repository.save(MovieStaffMapper.mapMovieStaff(oldMovieStaff, movieStaff));
+    }
+
+    public void delete(Long id) {
+        repository.delete(repository.getReferenceById(id));
     }
 }

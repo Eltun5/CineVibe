@@ -1,6 +1,7 @@
 package org.ea.cinevibe.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.ea.cinevibe.mapper.MovieMapper;
 import org.ea.cinevibe.model.Movie;
 import org.ea.cinevibe.model.Review;
 import org.ea.cinevibe.repository.MovieRepository;
@@ -35,6 +36,16 @@ public class MovieService {
 
     public List<Movie> getMovieByReleaseYear(Integer releaseYear) {
         return repository.getMovieByReleaseYear(releaseYear);
+    }
+
+    public Movie update(Long id, Movie movie) {
+        Movie oldMovie = repository.getReferenceById(id);
+
+        return repository.save(MovieMapper.mapMovie(oldMovie, movie));
+    }
+
+    public void delete(Long id) {
+        repository.delete(repository.getReferenceById(id));
     }
 
     public void changeMovieForAddReviewAction(Review review) {

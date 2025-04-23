@@ -27,4 +27,16 @@ public class ReviewController {
     public ResponseEntity<List<Review>> getReviewByMovie(@RequestParam Movie movie) {
         return ResponseEntity.ok(service.getReviewsByMovie(movie));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Review> update(@PathVariable Long id,
+                                         @RequestBody Review review) {
+        return ResponseEntity.ok(service.update(id, review));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

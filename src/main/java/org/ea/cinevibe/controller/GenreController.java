@@ -30,4 +30,16 @@ public class GenreController {
     public ResponseEntity<List<Genre>> findAll(@RequestParam String name) {
         return ResponseEntity.ok(service.getGenresByName(name));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Genre> update(@PathVariable Long id,
+                                        @RequestBody Genre genre) {
+        return ResponseEntity.ok(service.update(id, genre));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

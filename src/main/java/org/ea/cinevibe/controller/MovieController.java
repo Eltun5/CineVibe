@@ -35,4 +35,16 @@ public class MovieController {
     public ResponseEntity<List<Movie>> getMovieByReleaseYear(@RequestParam Integer releaseTime) {
         return ResponseEntity.ok(service.getMovieByReleaseYear(releaseTime));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Movie> update(@PathVariable Long id,
+                                        @RequestBody Movie movie) {
+        return ResponseEntity.ok(service.update(id, movie));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

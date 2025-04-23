@@ -32,4 +32,16 @@ public class CommentController {
     public ResponseEntity<List<Comment>> getCommentsByReview(@RequestParam Review review) {
         return ResponseEntity.ok(service.getCommentsByReview(review));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Comment> update(@PathVariable Long id,
+                                          @RequestBody Comment comment) {
+        return ResponseEntity.ok(service.update(id, comment));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

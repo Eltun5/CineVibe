@@ -36,4 +36,16 @@ public class MovieStaffController {
     public ResponseEntity<List<MovieStaff>> getMovieStaffByName(@RequestParam String name) {
         return ResponseEntity.ok(service.getMovieStaffByName(name));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MovieStaff> update(@PathVariable Long id,
+                                             @RequestBody MovieStaff movieStaff) {
+        return ResponseEntity.ok(service.update(id, movieStaff));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
