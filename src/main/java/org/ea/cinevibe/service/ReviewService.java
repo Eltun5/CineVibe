@@ -22,6 +22,7 @@ public class ReviewService {
     }
 
     public Review save(Review review) {
+        log.info("Some user create review.");
         movieService.changeMovieForAddReviewAction(review);
         return repository.save(review);
     }
@@ -31,12 +32,14 @@ public class ReviewService {
     }
 
     public Review update(Long id, Review review) {
+        log.info("Some user update review.");
         Review oldReview = repository.getReferenceById(id);
 
         return repository.save(ReviewMapper.mapReview(oldReview, review));
     }
 
     public void delete(Long id) {
+        log.warn("Some user delete review.");
         repository.delete(repository.getReferenceById(id));
     }
 }

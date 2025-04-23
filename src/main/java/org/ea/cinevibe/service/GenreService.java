@@ -1,5 +1,6 @@
 package org.ea.cinevibe.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.ea.cinevibe.model.Genre;
 import org.ea.cinevibe.repository.GenreRepository;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 public class GenreService {
     private final GenreRepository repository;
@@ -16,6 +18,7 @@ public class GenreService {
     }
 
     public Genre save(Genre genre) {
+        log.info("Some user create genre.");
         return repository.save(genre);
     }
 
@@ -28,6 +31,7 @@ public class GenreService {
     }
 
     public Genre update(Long id, Genre genre) {
+        log.info("Some user update genre.");
         Genre oldGenre = repository.getReferenceById(id);
 
         oldGenre.setName(genre.getName());
@@ -38,6 +42,7 @@ public class GenreService {
     }
 
     public void delete(Long id) {
+        log.warn("Some user delete genre.");
         repository.delete(repository.getReferenceById(id));
     }
 }

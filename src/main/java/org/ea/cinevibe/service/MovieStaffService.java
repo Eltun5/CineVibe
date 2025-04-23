@@ -1,5 +1,6 @@
 package org.ea.cinevibe.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.ea.cinevibe.mapper.MovieStaffMapper;
 import org.ea.cinevibe.model.MovieStaff;
 import org.ea.cinevibe.model.enums.MovieStaffRole;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class MovieStaffService {
     private final MovieStaffRepository repository;
@@ -17,6 +19,7 @@ public class MovieStaffService {
     }
 
     public MovieStaff save(MovieStaff movieStaff) {
+        log.info("Some user create movie staff.");
         return repository.save(movieStaff);
     }
 
@@ -33,12 +36,14 @@ public class MovieStaffService {
     }
 
     public MovieStaff update(Long id, MovieStaff movieStaff) {
+        log.info("Some user update movie staff.");
         MovieStaff oldMovieStaff = repository.getReferenceById(id);
 
         return repository.save(MovieStaffMapper.mapMovieStaff(oldMovieStaff, movieStaff));
     }
 
     public void delete(Long id) {
+        log.warn("Some user create movie staff.");
         repository.delete(repository.getReferenceById(id));
     }
 }

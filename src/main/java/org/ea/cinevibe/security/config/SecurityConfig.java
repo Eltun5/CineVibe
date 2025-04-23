@@ -53,7 +53,7 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
                 addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).
                 authorizeHttpRequests(authorize -> authorize.
-                        requestMatchers("/api/v1/auth/**", "/api/v1/movie",
+                        requestMatchers("/","/api/v1/auth/**", "/api/v1/movie",
                                 "/api/v1/movie-staff", "/api/v1/review",
                                 "/api/v1/genre", "/api/v1/comment").
                         permitAll().

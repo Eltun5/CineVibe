@@ -23,6 +23,7 @@ public class MovieService {
             log.error("Release year cannot be less than 1850!!!");
             throw new RuntimeException("Release year cannot be less than 1850!!!");
         }
+        log.info("Some user create movie.");
         return repository.save(movie);
     }
 
@@ -39,12 +40,14 @@ public class MovieService {
     }
 
     public Movie update(Long id, Movie movie) {
+        log.info("Some user update movie.");
         Movie oldMovie = repository.getReferenceById(id);
 
         return repository.save(MovieMapper.mapMovie(oldMovie, movie));
     }
 
     public void delete(Long id) {
+        log.warn("Some user delete movie.");
         repository.delete(repository.getReferenceById(id));
     }
 
