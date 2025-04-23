@@ -17,11 +17,11 @@ public class Comment {
     private Long id;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Review review;
 
     @OneToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private User user;
 
     @Column(nullable = false)

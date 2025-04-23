@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-    @Query("from movies where title ilike '%' || ? || '%'")
+    @Query("from movies where title ilike '%' || :title || '%'")
     List<Movie> getMovieByTitle(String title);
 
     List<Movie> getMovieByReleaseYear(Integer releaseYear);

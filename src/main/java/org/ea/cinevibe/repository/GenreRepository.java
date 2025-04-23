@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface GenreRepository extends JpaRepository<Genre, Long> {
-    @Query("from genres where name ilike '%' || ? || '%'")
+    @Query("from genres where name ilike '%' || :name || '%'")
     List<Genre> getGenresByName(String name);
 }

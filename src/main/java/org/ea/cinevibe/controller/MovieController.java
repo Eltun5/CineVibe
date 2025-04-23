@@ -26,13 +26,13 @@ public class MovieController {
         return ResponseEntity.ok(service.findALl());
     }
 
-    @GetMapping
-    public ResponseEntity<List<Movie>> getMoviesByTitle(@RequestParam String title) {
+    @GetMapping("/{title}")
+    public ResponseEntity<List<Movie>> getMoviesByTitle(@PathVariable String title) {
         return ResponseEntity.ok(service.getMoviesByTitle(title));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Movie>> getMovieByReleaseYear(@RequestParam Integer releaseTime) {
+    @GetMapping("/{release-time}")
+    public ResponseEntity<List<Movie>> getMovieByReleaseYear(@PathVariable Integer releaseTime) {
         return ResponseEntity.ok(service.getMovieByReleaseYear(releaseTime));
     }
 

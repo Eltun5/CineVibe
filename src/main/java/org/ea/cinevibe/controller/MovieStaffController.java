@@ -27,13 +27,13 @@ public class MovieStaffController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping
-    public ResponseEntity<List<MovieStaff>> getMovieStaffsByRole(@RequestParam MovieStaffRole role) {
+    @GetMapping("/{role}")
+    public ResponseEntity<List<MovieStaff>> getMovieStaffsByRole(@PathVariable MovieStaffRole role) {
         return ResponseEntity.ok(service.getMovieStaffsByRole(role));
     }
 
-    @GetMapping
-    public ResponseEntity<List<MovieStaff>> getMovieStaffByName(@RequestParam String name) {
+    @GetMapping("/{name}")
+    public ResponseEntity<List<MovieStaff>> getMovieStaffByName(@PathVariable String name) {
         return ResponseEntity.ok(service.getMovieStaffByName(name));
     }
 

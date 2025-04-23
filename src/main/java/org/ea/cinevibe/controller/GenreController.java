@@ -26,8 +26,8 @@ public class GenreController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping
-    public ResponseEntity<List<Genre>> findAll(@RequestParam String name) {
+    @GetMapping("/{name}")
+    public ResponseEntity<List<Genre>> findAll(@PathVariable String name) {
         return ResponseEntity.ok(service.getGenresByName(name));
     }
 

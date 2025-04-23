@@ -23,13 +23,13 @@ public class CommentController {
         return ResponseEntity.ok(service.save(comment));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Comment>> getCommentsByUser(@RequestParam User user) {
+    @GetMapping("/{user}")
+    public ResponseEntity<List<Comment>> getCommentsByUser(@PathVariable User user) {
         return ResponseEntity.ok(service.getCommentsByUser(user));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Comment>> getCommentsByReview(@RequestParam Review review) {
+    @GetMapping("/{review}")
+    public ResponseEntity<List<Comment>> getCommentsByReview(@PathVariable Review review) {
         return ResponseEntity.ok(service.getCommentsByReview(review));
     }
 
@@ -40,7 +40,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

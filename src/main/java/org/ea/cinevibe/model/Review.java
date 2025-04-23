@@ -18,11 +18,11 @@ public class Review {
     private Long id;
 
     @OneToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Movie movie;
 
     @OneToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private User user;
 
     @Size(min = 1, max = 5)
@@ -36,7 +36,7 @@ public class Review {
     private boolean isContainsSpoiler;
 
     @Column(name = "helpful_count")
-    private Integer helpfulCount;
+    private Long helpfulCount;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

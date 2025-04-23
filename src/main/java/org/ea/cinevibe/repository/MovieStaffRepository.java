@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface MovieStaffRepository extends JpaRepository<MovieStaff, Long> {
-    @Query("from movie_staffs where firstName || lastName ilike '%' || ? || '%'")
+    @Query("from movie_staffs where firstName || lastName ilike '%' || :name || '%'")
     List<MovieStaff> getMovieStaffsByName(String name);
 
     List<MovieStaff> getMovieStaffsByRole(MovieStaffRole role);
