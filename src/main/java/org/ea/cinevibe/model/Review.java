@@ -1,6 +1,7 @@
 package org.ea.cinevibe.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,7 @@ public class Review {
     @Column(nullable = false)
     private User user;
 
+    @Size(min = 1, max = 5)
     @Column(nullable = false)
     private Integer rating;
 

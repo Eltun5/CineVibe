@@ -19,7 +19,7 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<Review> save(@RequestBody @Size(min = 1, max = 5) Review review) {
+    public ResponseEntity<Review> save(@RequestBody Review review) {
         return ResponseEntity.ok(service.save(review));
     }
 
