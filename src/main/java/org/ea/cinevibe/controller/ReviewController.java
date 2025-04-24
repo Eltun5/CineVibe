@@ -1,6 +1,5 @@
 package org.ea.cinevibe.controller;
 
-import jakarta.validation.constraints.Size;
 import org.ea.cinevibe.model.Movie;
 import org.ea.cinevibe.model.Review;
 import org.ea.cinevibe.service.ReviewService;
@@ -38,5 +37,12 @@ public class ReviewController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @PutMapping("/{reviewId}")
+    public ResponseEntity<Review> clickedHelpful(@PathVariable Long reviewId,
+                                                 @RequestParam Long userId) {
+        return ResponseEntity.ok(service.clickedHelpful(reviewId, userId));
     }
 }

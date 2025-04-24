@@ -15,6 +15,10 @@ public class UserService {
         this.repository = repository;
     }
 
+    public User getUserById(Long id){
+        return repository.getReferenceById(id);
+    }
+
     public User getUserByUsername(String username) {
         return repository.getUserByUsername(username).
                 orElseThrow(() -> new NoDataFoundException("User"));
