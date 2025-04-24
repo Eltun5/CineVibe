@@ -11,5 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
+    @Query("from reviews order by helpfulCount")
     List<Review> getReviewsByMovie(Movie movie);
 }
