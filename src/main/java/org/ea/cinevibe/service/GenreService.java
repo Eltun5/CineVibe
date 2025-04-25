@@ -30,6 +30,10 @@ public class GenreService {
         return repository.getGenresByName(name);
     }
 
+    public List<Genre> getGenresByNames(List<String> names) {
+        return repository.getGenresByNames(names);
+    }
+
     public Genre update(Long id, Genre genre) {
         log.info("Some user update genre.");
         Genre oldGenre = repository.getReferenceById(id);

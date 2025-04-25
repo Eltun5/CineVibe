@@ -1,12 +1,17 @@
 package org.ea.cinevibe.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.ea.cinevibe.dto.MovieResponseDTO;
 import org.ea.cinevibe.mapper.MovieMapper;
+import org.ea.cinevibe.model.Genre;
 import org.ea.cinevibe.model.Movie;
 import org.ea.cinevibe.model.Review;
 import org.ea.cinevibe.repository.MovieRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Slf4j
@@ -14,8 +19,11 @@ import java.util.List;
 public class MovieService {
     private final MovieRepository repository;
 
-    public MovieService(MovieRepository repository) {
+    private final GenreService genreService;
+
+    public MovieService(MovieRepository repository, GenreService genreService) {
         this.repository = repository;
+        this.genreService = genreService;
     }
 
     public Movie save(Movie movie) {
@@ -27,20 +35,49 @@ public class MovieService {
         return repository.save(movie);
     }
 
-    public List<Movie> findALl() {
-        return repository.findAll();
+    public MovieResponseDTO findALl(int pageNum) {
+        Pageable pageable = PageRequest.of(pageNum - 1, 10);
+
+        return new MovieResponseDTO(
+                repository.getAllByPage(pageable),
+                genreService.findAll(),
+                null);
     }
 
-    public Movie getMovieById(Long id){
+    public Movie getMovieById(Long id) {
         return repository.getReferenceById(id);
     }
 
-    public List<Movie> getMoviesByTitle(String title) {
-        return repository.getMovieByTitle(title);
+    public MovieResponseDTO getMoviesByTitle(String title, int pageNum) {
+        Pageable pageable = PageRequest.of(pageNum - 1, 10);
+
+        return new MovieResponseDTO(
+                repository.getMovieByTitle(title, pageable),
+                genreService.findAll(),
+                null);
     }
 
-    public List<Movie> getMoviesByReleaseYear(Integer releaseYear) {
-        return repository.getMovieByReleaseYear(releaseYear);
+    public MovieResponseDTO getMoviesByReleaseYear(Integer releaseYear, int pageNum) {
+        Pageable pageable = PageRequest.of(pageNum - 1, 10);
+
+        return new MovieResponseDTO(
+                repository.getMovieByReleaseYear(releaseYear, pageable),
+                genreService.findAll(),
+                null);
+    }
+
+    public MovieResponseDTO getMoviesByGenre(List<String> genres, int pageNum) {
+        List<Genre> genresByNames = genreService.getGenresByNames(genres);
+
+        Pageable pageable = PageRequest.of(pageNum - 1, 10);
+
+        return new MovieResponseDTO(
+                repository.getAllByGenres(
+                        new HashSet<>(genresByNames),
+                        pageable),
+                genreService.findAll(),
+                genresByNames
+        );
     }
 
     public Movie update(Long id, Movie movie) {
