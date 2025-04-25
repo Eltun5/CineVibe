@@ -58,8 +58,4 @@ public class JwtService {
             throw new IllegalArgumentException("Token is not valid or expired: " + e.getMessage());
         }
     }
-
-    public String getSecretKey(){
-        return secretKey;
-    }
 }

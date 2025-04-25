@@ -52,7 +52,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 var customUserDetails = userService.getUserByUsername(username).getCustomUserDetails();
                 Token token = tokenService.getTokenByValue(tokenValue);
-                boolean isValidToken = token.isExpired() && token.isRevoked();
+                boolean isValidToken = !(token.isExpired() && token.isRevoked());
 
                 if (isValidToken && jwtService.isValidToken(tokenValue)) {
                     var authenticationToken = new UsernamePasswordAuthenticationToken(

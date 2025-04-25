@@ -31,11 +31,15 @@ public class MovieService {
         return repository.findAll();
     }
 
+    public Movie getMovieById(Long id){
+        return repository.getReferenceById(id);
+    }
+
     public List<Movie> getMoviesByTitle(String title) {
         return repository.getMovieByTitle(title);
     }
 
-    public List<Movie> getMovieByReleaseYear(Integer releaseYear) {
+    public List<Movie> getMoviesByReleaseYear(Integer releaseYear) {
         return repository.getMovieByReleaseYear(releaseYear);
     }
 

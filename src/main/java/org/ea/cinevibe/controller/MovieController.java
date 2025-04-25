@@ -33,7 +33,7 @@ public class MovieController {
 
     @GetMapping("/{release-time}")
     public ResponseEntity<List<Movie>> getMovieByReleaseYear(@PathVariable Integer releaseTime) {
-        return ResponseEntity.ok(service.getMovieByReleaseYear(releaseTime));
+        return ResponseEntity.ok(service.getMoviesByReleaseYear(releaseTime));
     }
 
     @PutMapping("/{id}")
