@@ -6,6 +6,7 @@ import org.ea.cinevibe.model.enums.UserRole;
 import org.ea.cinevibe.security.model.SecurityUserDetails;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,6 +27,9 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    @OneToMany
+    private List<Movie> watchList;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
