@@ -1,16 +1,26 @@
 package org.ea.cinevibe.repository;
 
+import org.ea.cinevibe.model.Genre;
 import org.ea.cinevibe.model.Movie;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query("from movies where title ilike '%' || :title || '%'")
-    List<Movie> getMovieByTitle(String title);
+    List<Movie> getMovieByTitle(String title, Pageable pageable);
 
-    List<Movie> getMovieByReleaseYear(Integer releaseYear);
+    List<Movie> getMovieByReleaseYear(Integer releaseYear, Pageable pageable);
+
+    @Query("from movies order by createdAt desc")
+    List<Movie> getAllByPage(Pageable pageable);
+
+    @Query("select m from movies m join m.genres g where g in :genres")
+    List<Movie> getAllByGenres(Set<Genre> genres, Pageable pageable);
+
 }

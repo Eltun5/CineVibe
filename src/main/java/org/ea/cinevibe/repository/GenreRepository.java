@@ -11,4 +11,7 @@ import java.util.List;
 public interface GenreRepository extends JpaRepository<Genre, Long> {
     @Query("from genres where name ilike '%' || :name || '%'")
     List<Genre> getGenresByName(String name);
+
+    @Query("from genres where name in :names")
+    List<Genre> getGenresByNames(List<String> names);
 }

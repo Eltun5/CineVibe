@@ -1,5 +1,6 @@
 package org.ea.cinevibe.controller;
 
+import org.ea.cinevibe.dto.MovieResponseDTO;
 import org.ea.cinevibe.model.Movie;
 import org.ea.cinevibe.service.MovieService;
 import org.springframework.http.ResponseEntity;
@@ -21,19 +22,27 @@ public class MovieController {
         return ResponseEntity.ok(service.save(movie));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Movie>> findAll() {
-        return ResponseEntity.ok(service.findALl());
+    @GetMapping("/{pageNum}")
+    public ResponseEntity<MovieResponseDTO> findAll(@PathVariable int pageNum) {
+        return ResponseEntity.ok(service.findALl(pageNum));
     }
 
-    @GetMapping("/{title}")
-    public ResponseEntity<List<Movie>> getMoviesByTitle(@PathVariable String title) {
-        return ResponseEntity.ok(service.getMoviesByTitle(title));
+    @GetMapping("/{title}{pageNum}")
+    public ResponseEntity<MovieResponseDTO> getMoviesByTitle(@PathVariable String title,
+                                                             @PathVariable int pageNum) {
+        return ResponseEntity.ok(service.getMoviesByTitle(title, pageNum));
     }
 
-    @GetMapping("/{release-time}")
-    public ResponseEntity<List<Movie>> getMovieByReleaseYear(@PathVariable Integer releaseTime) {
-        return ResponseEntity.ok(service.getMoviesByReleaseYear(releaseTime));
+    @GetMapping("/{releaseTime}{pageNum}")
+    public ResponseEntity<MovieResponseDTO> getMoviesByReleaseYear(@PathVariable Integer releaseTime,
+                                                                   @PathVariable int pageNum) {
+        return ResponseEntity.ok(service.getMoviesByReleaseYear(releaseTime, pageNum));
+    }
+
+    @GetMapping("/{genres}{pageNum}")
+    public ResponseEntity<MovieResponseDTO> getMoviesByGenre(@PathVariable List<String> genres,
+                                                             @PathVariable int pageNum) {
+        return ResponseEntity.ok(service.getMoviesByGenre(genres, pageNum));
     }
 
     @PutMapping("/{id}")
