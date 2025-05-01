@@ -8,19 +8,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-    @Query("from movies where title ilike '%' || :title || '%'")
-    List<Movie> getMovieByTitle(String title, Pageable pageable);
+    @Query("select m from movies m join m.genres g " +
+           "where g in :genres " +
+           "and m.title ilike '%' || :title || '%' " +
+           "and m.releaseYear = :releaseYear")
+    List<Movie> getMoviesByTitleAndGenresAndReleaseYear(String title,
+                                                        int releaseYear,
+                                                        List<Genre> genres,
+                                                        Pageable page);
 
-    List<Movie> getMovieByReleaseYear(Integer releaseYear, Pageable pageable);
-
-    @Query("from movies order by createdAt desc")
-    List<Movie> getAllByPage(Pageable pageable);
-
-    @Query("select m from movies m join m.genres g where g in :genres")
-    List<Movie> getAllByGenres(Set<Genre> genres, Pageable pageable);
-
+    @Query("select m from movies m join m.genres g " +
+           "where g in :genres " +
+           "and m.title ilike '%' || :title || '%'")
+    List<Movie> getMoviesByTitleAndGenres(String title,
+                                          List<Genre> genres,
+                                          Pageable page);
 }

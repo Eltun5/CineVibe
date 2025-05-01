@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -35,49 +35,37 @@ public class MovieService {
         return repository.save(movie);
     }
 
-    public MovieResponseDTO findALl(int pageNum) {
-        Pageable pageable = PageRequest.of(pageNum - 1, 10);
-
-        return new MovieResponseDTO(
-                repository.getAllByPage(pageable),
-                genreService.findAll(),
-                null);
-    }
-
     public Movie getMovieById(Long id) {
         return repository.getReferenceById(id);
     }
 
-    public MovieResponseDTO getMoviesByTitle(String title, int pageNum) {
-        Pageable pageable = PageRequest.of(pageNum - 1, 10);
+    public MovieResponseDTO getMoviesComplexFilter(String title,
+                                                   Integer releaseYear,
+                                                   List<String> genres,
+                                                   int pageNum,
+                                                   boolean sortByTitle,
+                                                   boolean sortByReleaseYear) {
+        if (title == null) title = "";
 
-        return new MovieResponseDTO(
-                repository.getMovieByTitle(title, pageable),
-                genreService.findAll(),
-                null);
-    }
-
-    public MovieResponseDTO getMoviesByReleaseYear(Integer releaseYear, int pageNum) {
-        Pageable pageable = PageRequest.of(pageNum - 1, 10);
-
-        return new MovieResponseDTO(
-                repository.getMovieByReleaseYear(releaseYear, pageable),
-                genreService.findAll(),
-                null);
-    }
-
-    public MovieResponseDTO getMoviesByGenre(List<String> genres, int pageNum) {
-        List<Genre> genresByNames = genreService.getGenresByNames(genres);
+        List<Genre> genresByNames;
+        if (genres == null || genres.isEmpty()) genresByNames = genreService.findAll();
+        else genresByNames = genreService.getGenresByNames(genres);
 
         Pageable pageable = PageRequest.of(pageNum - 1, 10);
 
+        List<Movie> movies;
+        if (releaseYear == null) movies = repository.
+                getMoviesByTitleAndGenres(title, genresByNames, pageable);
+        else movies = repository.getMoviesByTitleAndGenresAndReleaseYear(
+                title, releaseYear, genresByNames, pageable);
+
+        if (sortByTitle) movies.sort(Comparator.comparing(Movie::getTitle));
+        if (sortByReleaseYear) movies.sort(Comparator.comparing(Movie::getReleaseYear));
+
         return new MovieResponseDTO(
-                repository.getAllByGenres(
-                        new HashSet<>(genresByNames),
-                        pageable),
-                genreService.findAll(),
-                genresByNames
-        );
+                movies, genreService.findAll(),
+                releaseYear, genresByNames,
+                sortByTitle, sortByReleaseYear);
     }
 
     public Movie update(Long id, Movie movie) {

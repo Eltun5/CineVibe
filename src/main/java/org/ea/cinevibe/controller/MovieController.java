@@ -22,27 +22,17 @@ public class MovieController {
         return ResponseEntity.ok(service.save(movie));
     }
 
-    @GetMapping("/{pageNum}")
-    public ResponseEntity<MovieResponseDTO> findAll(@PathVariable int pageNum) {
-        return ResponseEntity.ok(service.findALl(pageNum));
-    }
-
-    @GetMapping("/{title}{pageNum}")
-    public ResponseEntity<MovieResponseDTO> getMoviesByTitle(@PathVariable String title,
-                                                             @PathVariable int pageNum) {
-        return ResponseEntity.ok(service.getMoviesByTitle(title, pageNum));
-    }
-
-    @GetMapping("/{releaseTime}{pageNum}")
-    public ResponseEntity<MovieResponseDTO> getMoviesByReleaseYear(@PathVariable Integer releaseTime,
-                                                                   @PathVariable int pageNum) {
-        return ResponseEntity.ok(service.getMoviesByReleaseYear(releaseTime, pageNum));
-    }
-
-    @GetMapping("/{genres}{pageNum}")
-    public ResponseEntity<MovieResponseDTO> getMoviesByGenre(@PathVariable List<String> genres,
-                                                             @PathVariable int pageNum) {
-        return ResponseEntity.ok(service.getMoviesByGenre(genres, pageNum));
+    @GetMapping("/{title}{genres}{releaseYear}{pageNum}{sortByTitle}{sortByReleaseYear}")
+    public ResponseEntity<MovieResponseDTO> getMoviesByComplexFilter(@PathVariable String title,
+                                                                     @PathVariable List<String> genres,
+                                                                     @PathVariable Integer releaseYear,
+                                                                     @PathVariable int pageNum,
+                                                                     @PathVariable boolean sortByTitle,
+                                                                     @PathVariable boolean sortByReleaseYear) {
+        return ResponseEntity.ok(service.
+                getMoviesComplexFilter(title, releaseYear,
+                        genres, pageNum,
+                        sortByTitle, sortByReleaseYear));
     }
 
     @PutMapping("/{id}")
