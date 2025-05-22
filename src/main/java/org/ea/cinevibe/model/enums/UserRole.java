@@ -1,5 +1,5 @@
 package org.ea.cinevibe.model.enums;
 
 public enum UserRole {
-    USER, MODERATOR, ADMIN
+    ROLE_USER, ROLE_MODERATOR, ROLE_ADMIN
 }

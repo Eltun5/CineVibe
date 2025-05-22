@@ -52,7 +52,7 @@ public class UserService {
     public User addMovieInWatchList(Long movieId) {
         User user = getCurrentUser();
 
-        Movie movie=movieService.getMovieById(movieId);
+        Movie movie=movieService.getById(movieId);
 
         List<Movie> watchList = user.getWatchList();
         watchList.add(movie);
@@ -64,7 +64,7 @@ public class UserService {
     public void removeMovieInWatchList(Long movieId){
         User user = getCurrentUser();
 
-        Movie movie=movieService.getMovieById(movieId);
+        Movie movie=movieService.getById(movieId);
 
         List<Movie> watchList = user.getWatchList();
         watchList.remove(movie);

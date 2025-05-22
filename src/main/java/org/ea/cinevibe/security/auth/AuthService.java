@@ -59,7 +59,7 @@ public class AuthService {
                     username(request.username()).
                     password(passwordEncoder.encode(request.password())).
                     email(request.email()).
-                    role(UserRole.USER).
+                    role(UserRole.ROLE_USER).
                     build();
 
             userService.save(user);

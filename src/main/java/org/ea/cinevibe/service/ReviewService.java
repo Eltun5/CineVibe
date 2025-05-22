@@ -32,7 +32,7 @@ public class ReviewService {
 
     public Review save(Review review) {
         log.info("Some user create review.");
-        movieService.changeMovieForAddReviewAction(review);
+        movieService.changeForAddReviewAction(review);
         return repository.save(review);
     }
 

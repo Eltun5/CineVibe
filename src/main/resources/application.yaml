@@ -24,5 +24,10 @@ jwt:
     expireTime: 900000
     secretKey: cJrXVTptebaGAZXbo5+BBwNufO1oPQl2BOuHdQYmfOQ=
 
-
+cloudinary:
+  cloud:
+    name:
+  api:
+    key:
+    secret:
 

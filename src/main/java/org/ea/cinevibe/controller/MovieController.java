@@ -1,44 +1,50 @@
 package org.ea.cinevibe.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.ea.cinevibe.dto.MovieFilterRequestDTO;
+import org.ea.cinevibe.dto.MovieRequestDTO;
 import org.ea.cinevibe.dto.MovieResponseDTO;
 import org.ea.cinevibe.model.Movie;
 import org.ea.cinevibe.service.MovieService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/v1/movie")
 public class MovieController {
     private final MovieService service;
 
-    public MovieController(MovieService service) {
-        this.service = service;
-    }
-
     @PostMapping
-    public ResponseEntity<Movie> save(@RequestBody Movie movie) {
-        return ResponseEntity.ok(service.save(movie));
+    public ResponseEntity<Movie> save(@RequestPart MovieRequestDTO request,
+                                      MultipartFile file) throws IOException {
+        return ResponseEntity.ok(service.save(request, file));
     }
 
-    @GetMapping("/{title}{genres}{releaseYear}{pageNum}{sortByTitle}{sortByReleaseYear}")
-    public ResponseEntity<MovieResponseDTO> getMoviesByComplexFilter(@PathVariable String title,
-                                                                     @PathVariable List<String> genres,
-                                                                     @PathVariable Integer releaseYear,
-                                                                     @PathVariable int pageNum,
-                                                                     @PathVariable boolean sortByTitle,
-                                                                     @PathVariable boolean sortByReleaseYear) {
-        return ResponseEntity.ok(service.
-                getMoviesComplexFilter(title, releaseYear,
-                        genres, pageNum,
-                        sortByTitle, sortByReleaseYear));
+    @GetMapping("/{id}")
+    public ResponseEntity<Movie> getMovieById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<MovieResponseDTO> getMoviesByComplexFilter(@RequestBody MovieFilterRequestDTO filterRequestDTO) {
+        return ResponseEntity.ok(service.getComplexFilter(filterRequestDTO));
+    }
+
+    @GetMapping("/search/{title}{pageNum}")
+    public ResponseEntity<MovieResponseDTO> search(@PathVariable String title,
+                                                   @PathVariable Integer pageNum) {
+        return ResponseEntity.ok(service.search(title, pageNum));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Movie> update(@PathVariable Long id,
-                                        @RequestBody Movie movie) {
-        return ResponseEntity.ok(service.update(id, movie));
+                                        @RequestPart MovieRequestDTO requestDTO,
+                                        MultipartFile file) throws IOException {
+        return ResponseEntity.ok(service.update(id, requestDTO, file));
     }
 
     @DeleteMapping("/{id}")

@@ -1,10 +1,16 @@
 package org.ea.cinevibe.model;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
+import org.ea.cinevibe.model.enums.MovieStatus;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -12,42 +18,64 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity(name = "movies")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(nullable = false)
-    private String title;
+    String title;
 
-    private String synopsis;
+    String synopsis;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    Set<Long> languageIds; // create language table
+
+    BigDecimal budget;
+
+    BigDecimal income;
+
+    @Column(name = "trailer_link")
+    String trailerLink;
 
     @Column(name = "release_year")
-    private Integer releaseYear;
+    Integer releaseYear;
 
-    @ManyToMany
-    private Set<MovieStaff> staffs;
+    @Enumerated(EnumType.STRING)
+    MovieStatus status;
 
-    @ManyToMany
-    private Set<Genre> genres;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "staff_ids")
+    Set<Long> staffIds;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "genre_ids")
+    Set<Long> genreIds;
 
     @Column(name = "poster_image_url")
-    private String posterImageUrl;
+    String posterImageUrl;
+
+    Double IMDB;
 
     @Column(name = "average_rating")
-    private Double averageRating;
+    Double averageRating;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "user_ids_for_raitings")
+    Set<Long> userIdsForRatings;
 
     @Column(name = "review_count")
-    private Integer reviewCount;
+    Integer reviewCount;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
 
     @PrePersist
-    private void prePersist() {
+    void prePersist() {
         createdAt = updatedAt = LocalDateTime.now();
     }
 }

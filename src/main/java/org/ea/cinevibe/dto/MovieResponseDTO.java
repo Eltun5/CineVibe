@@ -7,8 +7,5 @@ import java.util.List;
 
 public record MovieResponseDTO(List<Movie> movies,
                                List<Genre> allGenres,
-                               Integer selectedReleaseYear,
-                               List<Genre> selectedGenres,
-                               boolean sortByTitle,
-                               boolean sortByReleaseYear) {
+                               MovieFilterRequestDTO selectedParams) {
 }
