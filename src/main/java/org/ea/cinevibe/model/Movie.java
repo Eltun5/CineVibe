@@ -12,6 +12,7 @@ import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -29,8 +30,8 @@ public class Movie {
 
     String synopsis;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    Set<Long> languageIds; // create language table
+    @ManyToMany
+    List<Language> languages;
 
     BigDecimal budget;
 
@@ -45,13 +46,11 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     MovieStatus status;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "staff_ids")
-    Set<Long> staffIds;
+    @ManyToMany
+    List<MovieStaff> staffs;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "genre_ids")
-    Set<Long> genreIds;
+    @ManyToMany
+    List<Genre> genres;
 
     @Column(name = "poster_image_url")
     String posterImageUrl;
@@ -61,9 +60,9 @@ public class Movie {
     @Column(name = "average_rating")
     Double averageRating;
 
-    @JdbcTypeCode(SqlTypes.JSON)
+    @ManyToMany(fetch = FetchType.LAZY)
     @Column(name = "user_ids_for_raitings")
-    Set<Long> userIdsForRatings;
+    List<User> userIdsForRatings;
 
     @Column(name = "review_count")
     Integer reviewCount;

@@ -33,6 +33,11 @@ public class LanguageService {
         });
     }
 
+    public List<Language> searchByName(String name) {
+        log.info("Someone try to get language. Name : " + name);
+        return repository.searchByName(name);
+    }
+
     public Language update(Long id, String name) {
         log.info("Someone try to update language.");
         Language language = getById(id);
