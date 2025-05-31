@@ -15,20 +15,19 @@ import org.ea.cinevibe.repository.MovieRepository;
 import org.ea.cinevibe.repository.UserViewHistoryRepository;
 import org.ea.cinevibe.security.model.SecurityUserDetails;
 import org.ea.cinevibe.specification.MovieSpecification;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Service
@@ -73,7 +72,8 @@ public class MovieService {
         return movie;
     }
 
-    public MovieResponseDTO getComplexFilter(MovieFilterRequestDTO requestDTO) {
+    @Async
+    public CompletableFuture<MovieResponseDTO> getComplexFilter(MovieFilterRequestDTO requestDTO) {
         log.info("Someone try to get movie with complex filter.");
         Specification<Movie> spec = Specification.where(null);
 
@@ -106,14 +106,9 @@ public class MovieService {
                 requestDTO.isSortingDesc() ?
                         Sort.by(sortBy).descending() : Sort.by(sortBy).ascending());
 
-        Page<Movie> movies = repository.findAll(spec, pageable);
+        List<Movie> movies = repository.findAll(spec, pageable).getContent();
 
-        List<Movie> movieList = new ArrayList<>(movies.stream().toList());
-
-        if (requestDTO.sortByTitle()) movieList.sort(Comparator.comparing(Movie::getTitle));
-        if (requestDTO.sortByReleaseYear()) movieList.sort(Comparator.comparing(Movie::getReleaseYear));
-
-        return new MovieResponseDTO(movieList, genreService.findAll(), requestDTO);
+        return CompletableFuture.completedFuture(new MovieResponseDTO(movies, genreService.findAll(), requestDTO));
     }
 
     private String selectSortBy(MovieFilterRequestDTO requestDTO) {
@@ -126,20 +121,21 @@ public class MovieService {
                                                         "createAt";
     }
 
-    public MovieResponseDTO search(String title, Integer pageNum) {
+    @Async
+    public CompletableFuture<MovieResponseDTO> search(String title, Integer pageNum) {
         log.info("Someone try to search movies. Title : " + title);
 
         Pageable pageable = PageRequest.of(pageNum - 1, 10);
-        return new MovieResponseDTO(
+        return CompletableFuture.completedFuture(new MovieResponseDTO(
                 repository.findAll(Specification.
-                        where(MovieSpecification.searchTitle(title)),pageable).
+                                where(MovieSpecification.searchTitle(title)), pageable).
                         stream().toList(),
                 genreService.findAll(),
                 new MovieFilterRequestDTO(null, null,
                         null, pageNum, null,
                         null, false, false,
-                        false,false,false,
-                        false,false));
+                        false, false, false,
+                        false, false)));
     }
 
     public Movie update(Long id, MovieRequestDTO requestDTO, MultipartFile file) throws IOException {

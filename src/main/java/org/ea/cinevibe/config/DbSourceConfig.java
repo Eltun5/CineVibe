@@ -18,7 +18,7 @@ import javax.sql.DataSource;
                 "org.ea.cinevibe.security.repository"
         }
 )
-public class DbSource {
+public class DbSourceConfig {
     @Value("${spring.datasource.url}")
     private String DbUrl;
 

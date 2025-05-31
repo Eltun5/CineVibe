@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,14 +31,14 @@ public class MovieController {
     }
 
     @GetMapping
-    public ResponseEntity<MovieResponseDTO> getMoviesByComplexFilter(@RequestBody MovieFilterRequestDTO filterRequestDTO) {
-        return ResponseEntity.ok(service.getComplexFilter(filterRequestDTO));
+    public ResponseEntity<MovieResponseDTO> getMoviesByComplexFilter(@RequestBody MovieFilterRequestDTO filterRequestDTO) throws ExecutionException, InterruptedException {
+        return ResponseEntity.ok(service.getComplexFilter(filterRequestDTO).get());
     }
 
     @GetMapping("/search/{title}{pageNum}")
     public ResponseEntity<MovieResponseDTO> search(@PathVariable String title,
-                                                   @PathVariable Integer pageNum) {
-        return ResponseEntity.ok(service.search(title, pageNum));
+                                                   @PathVariable Integer pageNum) throws ExecutionException, InterruptedException {
+        return ResponseEntity.ok(service.search(title, pageNum).get());
     }
 
     @PutMapping("/{id}")
